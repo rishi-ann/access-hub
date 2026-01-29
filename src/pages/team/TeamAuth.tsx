@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card"; // Added for the container
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Loader2, Briefcase, Check } from "lucide-react";
 import { z } from "zod";
@@ -87,7 +88,7 @@ const TeamAuth = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-white font-sans antialiased text-slate-900 relative">
+    <div className="flex min-h-screen bg-slate-50/50 font-sans antialiased text-slate-900 relative">
       
       {/* Absolute Back Button */}
       <div className="absolute top-8 left-8 z-10">
@@ -100,140 +101,148 @@ const TeamAuth = () => {
         </Link>
       </div>
 
-      {/* Left Column: Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-10 md:px-20 lg:px-24">
-        <div className="max-w-sm w-full mx-auto">
-          <div className="mb-8">
-            <div className="h-10 w-10 bg-indigo-50 rounded-lg flex items-center justify-center mb-4">
-              <Briefcase className="h-5 w-5 text-indigo-600" />
+      {/* Left Column: Form Container */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12">
+        <Card className="w-full max-w-md border-slate-200 shadow-sm bg-white overflow-hidden">
+          <CardContent className="pt-10 pb-12 px-8">
+            <div className="mb-8">
+              <div className="h-12 w-12 bg-indigo-50 rounded-xl flex items-center justify-center mb-5">
+                <Briefcase className="h-6 w-6 text-indigo-600" />
+              </div>
+              <h1 className="text-2xl font-bold text-slate-900 mb-2 tracking-tight">Team Access</h1>
+              <p className="text-slate-500 text-sm">Coordinate schedules and manage appointments.</p>
             </div>
-            <h1 className="text-2xl font-bold text-slate-900 mb-2 tracking-tight text-indigo-600">Team Portal</h1>
-            <p className="text-slate-500 text-sm">Sign in to manage bookings and schedules.</p>
-          </div>
 
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="flex gap-6 border-b border-slate-100 rounded-none bg-transparent h-auto p-0 mb-8">
-              <TabsTrigger 
-                value="signin" 
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-indigo-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 py-2 text-sm font-medium"
-              >
-                Sign In
-              </TabsTrigger>
-              <TabsTrigger 
-                value="signup" 
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-indigo-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 py-2 text-sm font-medium"
-              >
-                Join Team
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="signin">
-              <form onSubmit={handleSignIn} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm">Work Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="name@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="h-10 border-slate-200 focus:border-indigo-600"
-                    required
-                  />
-                  {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password text-sm">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="h-10 border-slate-200 focus:border-indigo-600"
-                    required
-                  />
-                  {errors.password && <p className="text-xs text-red-500">{errors.password}</p>}
-                </div>
-                <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 h-10 font-medium" disabled={isSubmitting}>
-                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : "Sign In to Portal"}
-                </Button>
-              </form>
-            </TabsContent>
-            
-            <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm">Full Name</Label>
-                  <Input
-                    id="name"
-                    placeholder="John Doe"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    className="h-10 border-slate-200 focus:border-indigo-600"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email-up" className="text-sm">Work Email</Label>
-                  <Input
-                    id="email-up"
-                    type="email"
-                    placeholder="name@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="h-10 border-slate-200 focus:border-indigo-600"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password-up" className="text-sm">Password</Label>
-                  <Input
-                    id="password-up"
-                    type="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="h-10 border-slate-200 focus:border-indigo-600"
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 h-10 font-medium" disabled={isSubmitting}>
-                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : "Create Team Account"}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
-        </div>
+            <Tabs defaultValue="signin" className="w-full">
+              <TabsList className="grid grid-cols-2 mb-8 bg-slate-100 p-1 rounded-lg">
+                <TabsTrigger 
+                  value="signin" 
+                  className="text-sm font-medium data-[state=active]:text-indigo-600"
+                >
+                  Sign In
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="signup" 
+                  className="text-sm font-medium data-[state=active]:text-indigo-600"
+                >
+                  Join Team
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="signin">
+                <form onSubmit={handleSignIn} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Work Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="name@company.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                      required
+                    />
+                    {errors.email && <p className="text-xs text-red-500 font-medium">{errors.email}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                      required
+                    />
+                    {errors.password && <p className="text-xs text-red-500 font-medium">{errors.password}</p>}
+                  </div>
+                  <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 h-11 font-bold shadow-md transition-all active:scale-[0.98]" disabled={isSubmitting}>
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : "Sign In to Portal"}
+                  </Button>
+                </form>
+              </TabsContent>
+              
+              <TabsContent value="signup">
+                <form onSubmit={handleSignUp} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Full Name</Label>
+                    <Input
+                      id="name"
+                      placeholder="John Doe"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email-up" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Work Email</Label>
+                    <Input
+                      id="email-up"
+                      type="email"
+                      placeholder="name@company.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password-up" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Password</Label>
+                    <Input
+                      id="password-up"
+                      type="password"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                      required
+                    />
+                  </div>
+                  <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 h-11 font-bold shadow-md transition-all active:scale-[0.98]" disabled={isSubmitting}>
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : "Create Team Account"}
+                  </Button>
+                </form>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Right Column: Indigo Branding */}
       <div className="hidden lg:flex w-1/2 bg-indigo-600 p-16 flex-col justify-between text-white">
-        <div className="text-sm font-bold tracking-tight opacity-80 uppercase tracking-widest">Team Environment</div>
+        <div className="text-xs font-bold tracking-[0.2em] opacity-80 uppercase">Operations Control</div>
         
         <div className="max-w-md">
-          <h2 className="text-3xl font-bold mb-6">Coordinate your operations with precision.</h2>
-          <div className="space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="bg-indigo-500 p-1 rounded">
-                <Check className="h-4 w-4 text-indigo-100" />
+          <h2 className="text-4xl font-bold mb-8 leading-tight">Simplify your <br />daily operations.</h2>
+          <div className="space-y-8">
+            <div className="flex items-start gap-5">
+              <div className="bg-white/10 p-2 rounded-lg">
+                <Check className="h-5 w-5 text-indigo-100" />
               </div>
-              <p className="text-indigo-50 text-sm leading-relaxed font-medium">
-                Access real-time schedules and customer information to provide seamless service.
-              </p>
+              <div>
+                <p className="font-bold text-lg mb-1">Live Schedules</p>
+                <p className="text-indigo-50/70 text-sm leading-relaxed">
+                  Real-time visibility into all bookings to help you prepare for your next client seamlessly.
+                </p>
+              </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="bg-indigo-500 p-1 rounded">
-                <Check className="h-4 w-4 text-indigo-100" />
+            <div className="flex items-start gap-5">
+              <div className="bg-white/10 p-2 rounded-lg">
+                <Check className="h-5 w-5 text-indigo-100" />
               </div>
-              <p className="text-indigo-50 text-sm leading-relaxed font-medium">
-                Update appointment statuses and track your daily tasks in one unified system.
-              </p>
+              <div>
+                <p className="font-bold text-lg mb-1">Efficient Management</p>
+                <p className="text-indigo-50/70 text-sm leading-relaxed">
+                  Update statuses, manage notes, and track history across the entire team in one place.
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="text-[10px] uppercase tracking-[0.2em] font-bold text-indigo-300">
-          ServiceFlow © 2024 • Operations Panel
+        <div className="text-[10px] uppercase tracking-[0.3em] font-black text-indigo-300">
+          ServiceFlow © 2024
         </div>
       </div>
     </div>
