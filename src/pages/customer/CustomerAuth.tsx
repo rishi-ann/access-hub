@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card"; // Added Card for separate container
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Loader2, Check } from "lucide-react";
 import { z } from "zod";
@@ -81,7 +82,7 @@ const CustomerAuth = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className="flex min-h-screen bg-slate-50/30">
       
       {/* Back Button - Top Left */}
       <div className="absolute top-8 left-8 z-10">
@@ -94,110 +95,102 @@ const CustomerAuth = () => {
         </Link>
       </div>
 
-      {/* Left: Login Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-10 md:px-20 lg:px-24">
-        <div className="max-w-sm w-full mx-auto">
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold text-slate-900 mb-2">Welcome back</h1>
-            <p className="text-slate-500 text-sm">Please enter your details to continue.</p>
-          </div>
+      {/* Left side: Centered Form Container */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12">
+        <Card className="w-full max-w-md border-slate-200 shadow-sm bg-white">
+          <CardContent className="pt-8 pb-10 px-8">
+            <div className="mb-8">
+              <h1 className="text-2xl font-bold text-slate-900 mb-1">Welcome back</h1>
+              <p className="text-slate-500 text-sm">Enter your details to manage your portal.</p>
+            </div>
 
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="flex gap-6 border-b border-slate-100 rounded-none bg-transparent h-auto p-0 mb-8">
-              <TabsTrigger 
-                value="signin" 
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 py-2 text-sm font-medium"
-              >
-                Sign In
-              </TabsTrigger>
-              <TabsTrigger 
-                value="signup" 
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 py-2 text-sm font-medium"
-              >
-                Create Account
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="signin">
-              <form onSubmit={handleSignIn} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="h-10 border-slate-200"
-                    required
-                  />
-                  {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="h-10 border-slate-200"
-                    required
-                  />
-                  {errors.password && <p className="text-xs text-red-500">{errors.password}</p>}
-                </div>
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 h-10 font-medium" disabled={isSubmitting}>
-                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Sign In"}
-                </Button>
-              </form>
-            </TabsContent>
-            
-            <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input
-                    id="name"
-                    placeholder="John Doe"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    className="h-10 border-slate-200"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email-up">Email</Label>
-                  <Input
-                    id="email-up"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="h-10 border-slate-200"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password-up">Password</Label>
-                  <Input
-                    id="password-up"
-                    type="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="h-10 border-slate-200"
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 h-10 font-medium" disabled={isSubmitting}>
-                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Create Account"}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
-        </div>
+            <Tabs defaultValue="signin" className="w-full">
+              <TabsList className="grid grid-cols-2 mb-8 bg-slate-100 p-1">
+                <TabsTrigger value="signin" className="text-sm">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" className="text-sm">Sign Up</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="signin">
+                <form onSubmit={handleSignIn} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-slate-700">Email address</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="h-10 border-slate-200"
+                      required
+                    />
+                    {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password font-medium">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="h-10 border-slate-200"
+                      required
+                    />
+                    {errors.password && <p className="text-xs text-red-500">{errors.password}</p>}
+                  </div>
+                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 h-10 font-medium" disabled={isSubmitting}>
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Sign In"}
+                  </Button>
+                </form>
+              </TabsContent>
+              
+              <TabsContent value="signup">
+                <form onSubmit={handleSignUp} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Full Name</Label>
+                    <Input
+                      id="name"
+                      placeholder="John Doe"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      className="h-10 border-slate-200"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email-up">Email address</Label>
+                    <Input
+                      id="email-up"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="h-10 border-slate-200"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password-up">Password</Label>
+                    <Input
+                      id="password-up"
+                      type="password"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="h-10 border-slate-200"
+                      required
+                    />
+                  </div>
+                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 h-10 font-medium" disabled={isSubmitting}>
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Create Account"}
+                  </Button>
+                </form>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Right: Simple Blue Content */}
+      {/* Right side: Branding Content */}
       <div className="hidden lg:flex w-1/2 bg-blue-600 p-16 flex-col justify-between text-white">
         <div className="text-sm font-bold tracking-tight">ServiceFlow</div>
         
@@ -219,7 +212,7 @@ const CustomerAuth = () => {
           </div>
         </div>
 
-        <div className="text-xs text-blue-300">© 2024 ServiceFlow</div>
+        <div className="text-xs text-blue-300 opacity-80">© 2024 ServiceFlow</div>
       </div>
     </div>
   );
