@@ -61,6 +61,253 @@ export type Database = {
           },
         ]
       }
+      creator_availability: {
+        Row: {
+          created_at: string
+          creator_id: string
+          day_of_week: number
+          end_time: string
+          id: string
+          is_available: boolean | null
+          start_time: string
+        }
+        Insert: {
+          created_at?: string
+          creator_id: string
+          day_of_week: number
+          end_time: string
+          id?: string
+          is_available?: boolean | null
+          start_time: string
+        }
+        Update: {
+          created_at?: string
+          creator_id?: string
+          day_of_week?: number
+          end_time?: string
+          id?: string
+          is_available?: boolean | null
+          start_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "creator_availability_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "creator_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      creator_banking: {
+        Row: {
+          account_holder_name: string | null
+          account_number: string | null
+          bank_name: string | null
+          created_at: string
+          creator_id: string
+          id: string
+          ifsc_code: string | null
+          updated_at: string
+          upi_id: string | null
+        }
+        Insert: {
+          account_holder_name?: string | null
+          account_number?: string | null
+          bank_name?: string | null
+          created_at?: string
+          creator_id: string
+          id?: string
+          ifsc_code?: string | null
+          updated_at?: string
+          upi_id?: string | null
+        }
+        Update: {
+          account_holder_name?: string | null
+          account_number?: string | null
+          bank_name?: string | null
+          created_at?: string
+          creator_id?: string
+          id?: string
+          ifsc_code?: string | null
+          updated_at?: string
+          upi_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "creator_banking_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: true
+            referencedRelation: "creator_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      creator_portfolio: {
+        Row: {
+          created_at: string
+          creator_id: string
+          description: string | null
+          display_order: number | null
+          file_type: string
+          file_url: string
+          id: string
+          title: string | null
+        }
+        Insert: {
+          created_at?: string
+          creator_id: string
+          description?: string | null
+          display_order?: number | null
+          file_type: string
+          file_url: string
+          id?: string
+          title?: string | null
+        }
+        Update: {
+          created_at?: string
+          creator_id?: string
+          description?: string | null
+          display_order?: number | null
+          file_type?: string
+          file_url?: string
+          id?: string
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "creator_portfolio_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "creator_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      creator_pricing: {
+        Row: {
+          created_at: string
+          creator_id: string
+          description: string | null
+          hours_range: string
+          id: string
+          includes: string[] | null
+          is_active: boolean | null
+          package_name: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          creator_id: string
+          description?: string | null
+          hours_range: string
+          id?: string
+          includes?: string[] | null
+          is_active?: boolean | null
+          package_name: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          creator_id?: string
+          description?: string | null
+          hours_range?: string
+          id?: string
+          includes?: string[] | null
+          is_active?: boolean | null
+          package_name?: string
+          price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "creator_pricing_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "creator_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      creator_profiles: {
+        Row: {
+          bio: string | null
+          city: string | null
+          created_at: string
+          id: string
+          languages: string[] | null
+          location: string | null
+          onboarding_completed: boolean | null
+          onboarding_step: number | null
+          profile_picture_url: string | null
+          state: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bio?: string | null
+          city?: string | null
+          created_at?: string
+          id?: string
+          languages?: string[] | null
+          location?: string | null
+          onboarding_completed?: boolean | null
+          onboarding_step?: number | null
+          profile_picture_url?: string | null
+          state?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bio?: string | null
+          city?: string | null
+          created_at?: string
+          id?: string
+          languages?: string[] | null
+          location?: string | null
+          onboarding_completed?: boolean | null
+          onboarding_step?: number | null
+          profile_picture_url?: string | null
+          state?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      creator_specializations: {
+        Row: {
+          category: Database["public"]["Enums"]["specialization_category"]
+          created_at: string
+          creator_id: string
+          id: string
+          skill_level: Database["public"]["Enums"]["skill_level"]
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["specialization_category"]
+          created_at?: string
+          creator_id: string
+          id?: string
+          skill_level?: Database["public"]["Enums"]["skill_level"]
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["specialization_category"]
+          created_at?: string
+          creator_id?: string
+          id?: string
+          skill_level?: Database["public"]["Enums"]["skill_level"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "creator_specializations_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "creator_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           created_at: string
@@ -193,6 +440,18 @@ export type Database = {
     }
     Enums: {
       app_role: "customer" | "team" | "admin"
+      skill_level: "beginner" | "intermediate" | "expert"
+      specialization_category:
+        | "brand_strategy"
+        | "content_creation"
+        | "reel_direction"
+        | "story_telling"
+        | "creative_direction"
+        | "photography"
+        | "video_editing"
+        | "social_media_management"
+        | "influencer_marketing"
+        | "copywriting"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -321,6 +580,19 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["customer", "team", "admin"],
+      skill_level: ["beginner", "intermediate", "expert"],
+      specialization_category: [
+        "brand_strategy",
+        "content_creation",
+        "reel_direction",
+        "story_telling",
+        "creative_direction",
+        "photography",
+        "video_editing",
+        "social_media_management",
+        "influencer_marketing",
+        "copywriting",
+      ],
     },
   },
 } as const
