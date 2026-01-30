@@ -9,10 +9,10 @@ import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
 // Pages
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import CustomerAuth from "./pages/customer/CustomerAuth";
-import CustomerDashboard from "./pages/customer/CustomerDashboard";
-import TeamAuth from "./pages/team/TeamAuth";
-import TeamDashboard from "./pages/team/TeamDashboard";
+import InfluencerAuth from "./pages/influencer/InfluencerAuth";
+import InfluencerDashboard from "./pages/influencer/InfluencerDashboard";
+import CreatorAuth from "./pages/creator/CreatorAuth";
+import CreatorDashboard from "./pages/creator/CreatorDashboard";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 
@@ -29,17 +29,23 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               
-              {/* Customer Routes */}
-              <Route path="/customer/auth" element={<CustomerAuth />} />
-              <Route path="/customer/dashboard" element={<CustomerDashboard />} />
+              {/* Influencer Routes (formerly Customer) */}
+              <Route path="/influencer/auth" element={<InfluencerAuth />} />
+              <Route path="/influencer/dashboard" element={<InfluencerDashboard />} />
               
-              {/* Team Routes */}
-              <Route path="/team/auth" element={<TeamAuth />} />
-              <Route path="/team/dashboard" element={<TeamDashboard />} />
+              {/* Creator Routes (formerly Team) */}
+              <Route path="/creator/auth" element={<CreatorAuth />} />
+              <Route path="/creator/dashboard" element={<CreatorDashboard />} />
               
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              
+              {/* Legacy redirects */}
+              <Route path="/customer/auth" element={<InfluencerAuth />} />
+              <Route path="/customer/dashboard" element={<InfluencerDashboard />} />
+              <Route path="/team/auth" element={<CreatorAuth />} />
+              <Route path="/team/dashboard" element={<CreatorDashboard />} />
               
               {/* Catch-all */}
               <Route path="*" element={<NotFound />} />

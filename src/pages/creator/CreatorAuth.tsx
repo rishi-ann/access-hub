@@ -5,15 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card"; // Added for the container
+import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Loader2, Briefcase, Check } from "lucide-react";
+import { ArrowLeft, Loader2, Palette, Check } from "lucide-react";
 import { z } from "zod";
 
 const emailSchema = z.string().email("Please enter a valid email address");
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
 
-const TeamAuth = () => {
+const CreatorAuth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -26,7 +26,7 @@ const TeamAuth = () => {
 
   useEffect(() => {
     if (!isLoading && user && userRole === "team") {
-      navigate("/team/dashboard");
+      navigate("/creator/dashboard");
     }
   }, [user, userRole, isLoading, navigate]);
 
@@ -73,8 +73,8 @@ const TeamAuth = () => {
       if (error.message?.includes("already registered")) errorMessage = "Email already registered.";
       toast({ variant: "destructive", title: "Sign up failed", description: errorMessage });
     } else {
-      toast({ title: "Account created!", description: "Welcome to the team portal." });
-      navigate("/team/dashboard");
+      toast({ title: "Account created!", description: "Welcome to the creator portal." });
+      navigate("/creator/dashboard");
     }
     setIsSubmitting(false);
   };
@@ -82,7 +82,7 @@ const TeamAuth = () => {
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
-        <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
+        <Loader2 className="h-5 w-5 animate-spin text-purple-600" />
       </div>
     );
   }
@@ -94,7 +94,7 @@ const TeamAuth = () => {
       <div className="absolute top-8 left-8 z-10">
         <Link 
           to="/" 
-          className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors"
+          className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-purple-600 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Home
@@ -106,40 +106,40 @@ const TeamAuth = () => {
         <Card className="w-full max-w-md border-slate-200 shadow-sm bg-white overflow-hidden">
           <CardContent className="pt-10 pb-12 px-8">
             <div className="mb-8">
-              <div className="h-12 w-12 bg-indigo-50 rounded-xl flex items-center justify-center mb-5">
-                <Briefcase className="h-6 w-6 text-indigo-600" />
+              <div className="h-12 w-12 bg-purple-50 rounded-xl flex items-center justify-center mb-5">
+                <Palette className="h-6 w-6 text-purple-600" />
               </div>
-              <h1 className="text-2xl font-bold text-slate-900 mb-2 tracking-tight">Team Access</h1>
-              <p className="text-slate-500 text-sm">Coordinate schedules and manage appointments.</p>
+              <h1 className="text-2xl font-bold text-slate-900 mb-2 tracking-tight">Creator Portal</h1>
+              <p className="text-slate-500 text-sm">Join our creative community and showcase your work.</p>
             </div>
 
             <Tabs defaultValue="signin" className="w-full">
               <TabsList className="grid grid-cols-2 mb-8 bg-slate-100 p-1 rounded-lg">
                 <TabsTrigger 
                   value="signin" 
-                  className="text-sm font-medium data-[state=active]:text-indigo-600"
+                  className="text-sm font-medium data-[state=active]:text-purple-600"
                 >
                   Sign In
                 </TabsTrigger>
                 <TabsTrigger 
                   value="signup" 
-                  className="text-sm font-medium data-[state=active]:text-indigo-600"
+                  className="text-sm font-medium data-[state=active]:text-purple-600"
                 >
-                  Join Team
+                  Join as Creator
                 </TabsTrigger>
               </TabsList>
               
               <TabsContent value="signin">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Work Email</Label>
+                    <Label htmlFor="email" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Email</Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="name@company.com"
+                      placeholder="creator@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                      className="h-11 border-slate-200 focus-visible:ring-purple-600"
                       required
                     />
                     {errors.email && <p className="text-xs text-red-500 font-medium">{errors.email}</p>}
@@ -152,13 +152,13 @@ const TeamAuth = () => {
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                      className="h-11 border-slate-200 focus-visible:ring-purple-600"
                       required
                     />
                     {errors.password && <p className="text-xs text-red-500 font-medium">{errors.password}</p>}
                   </div>
-                  <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 h-11 font-bold shadow-md transition-all active:scale-[0.98]" disabled={isSubmitting}>
-                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : "Sign In to Portal"}
+                  <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 h-11 font-bold shadow-md transition-all active:scale-[0.98]" disabled={isSubmitting}>
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : "Sign In"}
                   </Button>
                 </form>
               </TabsContent>
@@ -169,21 +169,21 @@ const TeamAuth = () => {
                     <Label htmlFor="name" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Full Name</Label>
                     <Input
                       id="name"
-                      placeholder="John Doe"
+                      placeholder="Your Name"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                      className="h-11 border-slate-200 focus-visible:ring-purple-600"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email-up" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Work Email</Label>
+                    <Label htmlFor="email-up" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Email</Label>
                     <Input
                       id="email-up"
                       type="email"
-                      placeholder="name@company.com"
+                      placeholder="creator@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                      className="h-11 border-slate-200 focus-visible:ring-purple-600"
                       required
                     />
                   </div>
@@ -195,12 +195,12 @@ const TeamAuth = () => {
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="h-11 border-slate-200 focus-visible:ring-indigo-600"
+                      className="h-11 border-slate-200 focus-visible:ring-purple-600"
                       required
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 h-11 font-bold shadow-md transition-all active:scale-[0.98]" disabled={isSubmitting}>
-                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : "Create Team Account"}
+                  <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 h-11 font-bold shadow-md transition-all active:scale-[0.98]" disabled={isSubmitting}>
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : "Create Creator Account"}
                   </Button>
                 </form>
               </TabsContent>
@@ -209,44 +209,55 @@ const TeamAuth = () => {
         </Card>
       </div>
 
-      {/* Right Column: Indigo Branding */}
-      <div className="hidden lg:flex w-1/2 bg-indigo-600 p-16 flex-col justify-between text-white">
-        <div className="text-xs font-bold tracking-[0.2em] opacity-80 uppercase">Operations Control</div>
+      {/* Right Column: Purple Branding */}
+      <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-purple-600 to-purple-800 p-16 flex-col justify-between text-white">
+        <div className="text-xs font-bold tracking-[0.2em] opacity-80 uppercase">Creator Studio</div>
         
         <div className="max-w-md">
-          <h2 className="text-4xl font-bold mb-8 leading-tight">Simplify your <br />daily operations.</h2>
+          <h2 className="text-4xl font-bold mb-8 leading-tight">Showcase your <br />creative talent.</h2>
           <div className="space-y-8">
             <div className="flex items-start gap-5">
               <div className="bg-white/10 p-2 rounded-lg">
-                <Check className="h-5 w-5 text-indigo-100" />
+                <Check className="h-5 w-5 text-purple-100" />
               </div>
               <div>
-                <p className="font-bold text-lg mb-1">Live Schedules</p>
-                <p className="text-indigo-50/70 text-sm leading-relaxed">
-                  Real-time visibility into all bookings to help you prepare for your next client seamlessly.
+                <p className="font-bold text-lg mb-1">Build Your Portfolio</p>
+                <p className="text-purple-50/70 text-sm leading-relaxed">
+                  Upload your best work and let brands discover your creative skills.
                 </p>
               </div>
             </div>
             <div className="flex items-start gap-5">
               <div className="bg-white/10 p-2 rounded-lg">
-                <Check className="h-5 w-5 text-indigo-100" />
+                <Check className="h-5 w-5 text-purple-100" />
               </div>
               <div>
-                <p className="font-bold text-lg mb-1">Efficient Management</p>
-                <p className="text-indigo-50/70 text-sm leading-relaxed">
-                  Update statuses, manage notes, and track history across the entire team in one place.
+                <p className="font-bold text-lg mb-1">Set Your Rates</p>
+                <p className="text-purple-50/70 text-sm leading-relaxed">
+                  Define your pricing packages and availability on your own terms.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-5">
+              <div className="bg-white/10 p-2 rounded-lg">
+                <Check className="h-5 w-5 text-purple-100" />
+              </div>
+              <div>
+                <p className="font-bold text-lg mb-1">Connect with Brands</p>
+                <p className="text-purple-50/70 text-sm leading-relaxed">
+                  Get discovered by influencers and brands looking for creative talent.
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="text-[10px] uppercase tracking-[0.3em] font-black text-indigo-300">
-          ServiceFlow © 2024
+        <div className="text-[10px] uppercase tracking-[0.3em] font-black text-purple-300">
+          ServiceFlow © 2026
         </div>
       </div>
     </div>
   );
 };
 
-export default TeamAuth;
+export default CreatorAuth;
